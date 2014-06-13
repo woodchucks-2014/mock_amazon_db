@@ -16,24 +16,43 @@ require "faker"
 
 database = SQLite3::Database.open "database.db"
 
-fake_companies = []
-fake_names = []
-email = []
-password = []
-username = []
+fake_user_names = []
+user_email = []
+user_password = []
+user_username = []
 
-100.times do 
-	# fake_names << Faker::Name.name 
-	fake_companies << Faker::Company.name
-	# email << Faker::Internet.email
-	# password << Faker::Internet.password
-	# username << Faker::Internet.user_name
+fake_author_names = []
+
+book_titles = []
+genres = ["Horror", "Romance", "Teen", "Sci Fi", "Mystery", "Fiction", "Non-fiction"] # 7 genres
+
+review_ratings = [1,2,3,4,5]
+review_content = []
+
+100.times do ## people
+	fake_user_names << Faker::Name.name 
+	user_email = Faker::Internet.email
+	user_password = Faker::Internet.password
+	user_username = Faker::Internet.user_name
 end
-# p fake_names
-# p email
-# p password
-# p username
-# p fake_companies
+
+50.times do ## authors
+	fake_author_names << Faker::Name.name
+end
+
+200.times do ## books
+	book_titles << Faker::Lorem.word
+end
+
+
+20.times do ## publishers
+	fake_companies << Faker::Company.name
+end
+
+50.times do ## reviews
+	review_content << Faker::Lorem.sentence
+end
+
 
 ## UPDATING USERS
 # for i in 0...100
@@ -49,5 +68,11 @@ end
 # p database.execute("SELECT * FROM publishers")
 
 
-## UPDATING 
+## UPDATING AUTHORS
+# publisher_id = database.execute("SELECT id FROM publishers")
+# for i in 0...100
+# 	database.execute("INSERT INTO authors (publisher_id, updated_at, created_at) VALUES (?, datetime('now'), datetime('now'))", (publisher_id[i].first))
+# end
+p database.execute("SELECT publisher_id FROM authors")
+
 
