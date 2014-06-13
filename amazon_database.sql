@@ -21,7 +21,10 @@ CREATE TABLE `Books` (
   `author_id` INTEGER NULL DEFAULT NULL,
   `publisher_id` INTEGER NULL DEFAULT NULL,
   `title` VARCHAR NULL DEFAULT NULL,
-  `releaseed_on` DATE NULL DEFAULT NULL,
+  `genre` VARCHAR NULL DEFAULT NULL,
+  `released_on` DATE NULL DEFAULT NULL,
+  `updated_at` DATE NULL DEFAULT NULL,
+  `created_at` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -35,6 +38,8 @@ DROP TABLE IF EXISTS `Authors`;
 CREATE TABLE `Authors` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `publisher_id` INTEGER NULL DEFAULT NULL,
+  `created_at` DATE NULL DEFAULT NULL,
+  `updated_at` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -51,6 +56,8 @@ CREATE TABLE `Users` (
   `email` VARCHAR NULL DEFAULT NULL,
   `password` VARCHAR NULL DEFAULT NULL,
   `username` VARCHAR NULL DEFAULT NULL,
+  `upated_at` DATE NULL DEFAULT NULL,
+  `created_at` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -64,6 +71,8 @@ DROP TABLE IF EXISTS `Publishers`;
 CREATE TABLE `Publishers` (
   `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
   `name` VARCHAR NULL DEFAULT NULL,
+  `created_at` DATE NULL DEFAULT NULL,
+  `updated_at` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -109,14 +118,14 @@ ALTER TABLE `Reviews` ADD FOREIGN KEY (user_id) REFERENCES `Users` (`id`);
 -- Test Data
 -- ---
 
--- INSERT INTO `Books` (`id`,`author_id`,`publisher_id`,`title`,`releaseed_on`) VALUES
--- ('','','','','');
--- INSERT INTO `Authors` (`id`,`publisher_id`) VALUES
--- ('','');
--- INSERT INTO `Users` (`id`,`name`,`email`,`password`,`username`) VALUES
--- ('','','','','');
--- INSERT INTO `Publishers` (`id`,`name`) VALUES
--- ('','');
+-- INSERT INTO `Books` (`id`,`author_id`,`publisher_id`,`title`,`genre`,`released_on`,`updated_at`,`created_at`) VALUES
+-- ('','','','','','','','');
+-- INSERT INTO `Authors` (`id`,`publisher_id`,`created_at`,`updated_at`) VALUES
+-- ('','','','');
+-- INSERT INTO `Users` (`id`,`name`,`email`,`password`,`username`,`upated_at`,`created_at`) VALUES
+-- ('','','','','','','');
+-- INSERT INTO `Publishers` (`id`,`name`,`created_at`,`updated_at`) VALUES
+-- ('','','','');
 -- INSERT INTO `Reviews` (`id`,`book_id`,`user_id`,`rating`,`content`,`created_at`,`updated_at`) VALUES
 -- ('','','','','','','');
 
