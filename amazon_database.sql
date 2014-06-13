@@ -1,131 +1,59 @@
+DROP TABLE IF EXISTS Books;
 
-
-
-
--- ---
--- Globals
--- ---
-
--- SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
--- SET FOREIGN_KEY_CHECKS=0;
-
--- ---
--- Table 'Books'
--- 
--- ---
-
-DROP TABLE IF EXISTS `Books`;
-
-CREATE TABLE `Books` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `author_id` INTEGER NULL DEFAULT NULL,
-  `publisher_id` INTEGER NULL DEFAULT NULL,
-  `title` VARCHAR NULL DEFAULT NULL,
-  `genre` VARCHAR NULL DEFAULT NULL,
-  `released_on` DATE NULL DEFAULT NULL,
-  `updated_at` DATE NULL DEFAULT NULL,
-  `created_at` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE Books (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author_id INTEGER,
+  publisher_id INTEGER,
+  title VARCHAR,
+  genre VARCHAR,
+  released_on DATE,
+  updated_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES Authors(id),
+  FOREIGN KEY (publisher_id) REFERENCES Publishers (id)
 );
 
--- ---
--- Table 'Authors'
--- 
--- ---
+DROP TABLE IF EXISTS Authors;
 
-DROP TABLE IF EXISTS `Authors`;
-
-CREATE TABLE `Authors` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `publisher_id` INTEGER NULL DEFAULT NULL,
-  `created_at` DATE NULL DEFAULT NULL,
-  `updated_at` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE Authors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  publisher_id INTEGER DEFAULT NULL,
+  updated_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY (publisher_id) REFERENCES Publishers (id)
 );
 
--- ---
--- Table 'Users'
--- 
--- ---
+DROP TABLE IF EXISTS Users;
 
-DROP TABLE IF EXISTS `Users`;
-
-CREATE TABLE `Users` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR NULL DEFAULT NULL,
-  `email` VARCHAR NULL DEFAULT NULL,
-  `password` VARCHAR NULL DEFAULT NULL,
-  `username` VARCHAR NULL DEFAULT NULL,
-  `upated_at` DATE NULL DEFAULT NULL,
-  `created_at` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE Users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR DEFAULT NULL,
+  email VARCHAR DEFAULT NULL,
+  password VARCHAR DEFAULT NULL,
+  username VARCHAR DEFAULT NULL,
+  updated_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL
 );
 
--- ---
--- Table 'Publishers'
--- 
--- ---
+DROP TABLE IF EXISTS Publishers;
 
-DROP TABLE IF EXISTS `Publishers`;
-
-CREATE TABLE `Publishers` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `name` VARCHAR NULL DEFAULT NULL,
-  `created_at` DATE NULL DEFAULT NULL,
-  `updated_at` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE Publishers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR DEFAULT NULL,
+  updated_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL
 );
 
--- ---
--- Table 'Reviews'
--- 
--- ---
+DROP TABLE IF EXISTS Reviews;
 
-DROP TABLE IF EXISTS `Reviews`;
-
-CREATE TABLE `Reviews` (
-  `id` INTEGER NULL AUTO_INCREMENT DEFAULT NULL,
-  `book_id` INTEGER NULL DEFAULT NULL,
-  `user_id` INTEGER NULL DEFAULT NULL,
-  `rating` INTEGER NULL DEFAULT NULL,
-  `content` VARCHAR NULL DEFAULT NULL,
-  `created_at` DATE NULL DEFAULT NULL,
-  `updated_at` DATE NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE Reviews (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  book_id INTEGER DEFAULT NULL,
+  user_id INTEGER DEFAULT NULL,
+  rating INTEGER DEFAULT NULL,
+  content VARCHAR DEFAULT NULL,
+  updated_at DATETIME NOT NULL,
+  created_at DATETIME NOT NULL,
+  FOREIGN KEY (book_id) REFERENCES Books (id),
+  FOREIGN KEY (user_id) REFERENCES Users (id)
 );
-
--- ---
--- Foreign Keys
--- ---
-
-ALTER TABLE `Books` ADD FOREIGN KEY (author_id) REFERENCES `Authors` (`id`);
-ALTER TABLE `Books` ADD FOREIGN KEY (publisher_id) REFERENCES `Publishers` (`id`);
-ALTER TABLE `Authors` ADD FOREIGN KEY (publisher_id) REFERENCES `Publishers` (`id`);
-ALTER TABLE `Reviews` ADD FOREIGN KEY (book_id) REFERENCES `Books` (`id`);
-ALTER TABLE `Reviews` ADD FOREIGN KEY (user_id) REFERENCES `Users` (`id`);
-
--- ---
--- Table Properties
--- ---
-
--- ALTER TABLE `Books` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Authors` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Users` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Publishers` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
--- ALTER TABLE `Reviews` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ---
--- Test Data
--- ---
-
--- INSERT INTO `Books` (`id`,`author_id`,`publisher_id`,`title`,`genre`,`released_on`,`updated_at`,`created_at`) VALUES
--- ('','','','','','','','');
--- INSERT INTO `Authors` (`id`,`publisher_id`,`created_at`,`updated_at`) VALUES
--- ('','','','');
--- INSERT INTO `Users` (`id`,`name`,`email`,`password`,`username`,`upated_at`,`created_at`) VALUES
--- ('','','','','','','');
--- INSERT INTO `Publishers` (`id`,`name`,`created_at`,`updated_at`) VALUES
--- ('','','','');
--- INSERT INTO `Reviews` (`id`,`book_id`,`user_id`,`rating`,`content`,`created_at`,`updated_at`) VALUES
--- ('','','','','','','');
-
