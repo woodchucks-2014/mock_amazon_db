@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS Authors;
 
 CREATE TABLE Authors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR DEFAULT NOT NULL
   publisher_id INTEGER DEFAULT NULL,
   created_at DEFAULT current_timestamp,
   updated_at DEFAULT current_timestamp,
@@ -28,6 +29,30 @@ DROP TABLE IF EXISTS Publishers;
 CREATE TABLE Publishers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR DEFAULT NULL,
+  created_at DEFAULT current_timestamp,
+  updated_at DEFAULT current_timestamp,
+);
+
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name VARCHAR DEFAULT NULL,
+  email VARCHAR DEFAULT NULL,
+  password VARCHAR DEFAULT NULL,
+  username VARCHAR DEFAULT NULL,
+  created_at DEFAULT current_timestamp,
+  updated_at DEFAULT current_timestamp,
+);
+
+DROP TABLE IF EXISTS Orders;
+
+CREATE TABLE Orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  book_id INTEGER DEFAULT NOT NULL,
+  user_id INTEGER DEFAULT NOT NULL,
+  author_id INTEGER DEFAULT NOT NULL,
+  publisher_id INTEGER DEFAULT NOT NULL,
   created_at DEFAULT current_timestamp,
   updated_at DEFAULT current_timestamp,
 );
@@ -44,16 +69,4 @@ CREATE TABLE Reviews (
   updated_at DEFAULT current_timestamp,
   FOREIGN KEY (book_id) REFERENCES Books (id),
   FOREIGN KEY (user_id) REFERENCES Users (id)
-);
-
-DROP TABLE IF EXISTS Users;
-
-CREATE TABLE Users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR DEFAULT NULL,
-  email VARCHAR DEFAULT NULL,
-  password VARCHAR DEFAULT NULL,
-  username VARCHAR DEFAULT NULL,
-  created_at DEFAULT current_timestamp,
-  updated_at DEFAULT current_timestamp,
 );
