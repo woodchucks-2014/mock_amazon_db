@@ -4,13 +4,6 @@
 ## use Faker gem to generate information for each of the tables
 ## Write queries to address questions
 
-## TESTS
-## Find all books published by X publisher
-## Find all reviews on a certain book
-## Find all reviews by a certain user
-## Find all books written by a certain author
-## Find all reviews on book X with rating > 4 
-
 require "sqlite3"
 require "faker"
 
@@ -49,7 +42,6 @@ end
 	book_release_dates << Faker::Business.credit_card_expiry_date.to_s
 end
 
-
 20.times do ## publishers
 	fake_companies << Faker::Company.name
 end
@@ -58,39 +50,68 @@ end
 	review_content << Faker::Lorem.sentence
 end
 
-### 200 orders
-
-
 ## UPDATING USERS
-# for i in 0...100
-# 	database.execute("INSERT INTO users (name, email, password, username, updated_at, created_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)",
-# 	 [fake_user_names[i], user_email[i], user_password[i], user_username[i]])
-# end
+for i in 0...100
+	database.execute("INSERT INTO users (name, email, password, username, updated_at, created_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)",
+	 [fake_user_names[i], user_email[i], user_password[i], user_username[i]])
+end
 
 ## UPDATING PUBLISHERS
-# for i in 0...20
-# 	database.execute("INSERT INTO publishers (name, updated_at, created_at) VALUES (?, current_timestamp, current_timestamp)",
-# 	 [fake_companies[i]])
-# end
-
+for i in 0...20
+	database.execute("INSERT INTO publishers (name, updated_at, created_at) VALUES (?, current_timestamp, current_timestamp)",
+	 [fake_companies[i]])
+end
 
 ## UPDATING AUTHORS
 publisher_ids = database.execute("SELECT id FROM publishers") # 20 
-# p publisher_ids
 
-# for i in 0...50
-# 	x = publisher_ids.flatten.sample
-# 	database.execute("INSERT INTO authors (name, publisher_id, updated_at, created_at) VALUES (?, ?, current_timestamp, current_timestamp)",
-# 		[fake_author_names[i], x])
-# end
+for i in 0...50
+	x = publisher_ids.flatten.sample
+	database.execute("INSERT INTO authors (name, publisher_id, updated_at, created_at) VALUES (?, ?, current_timestamp, current_timestamp)",
+		[fake_author_names[i], x])
+end
 
 ## UDPATING BOOKS
 author_ids = database.execute("SELECT id FROM authors")
-# for i in 0...200
-# 	database.execute("INSERT INTO books (author_id, publisher_id, title, genre, released_on, updated_at, created_at) VALUES (?, ?, ?, ?, ?, current_timestamp, current_timestamp)",
-# 	 [author_ids.sample, publisher_ids.sample, book_titles[i], genres.sample, book_release_dates[i]])
-# end
+
+for i in 0...200
+	database.execute("INSERT INTO books (author_id, publisher_id, title, genre, released_on, updated_at, created_at) VALUES (?, ?, ?, ?, ?, current_timestamp, current_timestamp)",
+	 [author_ids.sample, publisher_ids.sample, book_titles[i], genres.sample, book_release_dates[i]])
+end
 
 ## UDPATING REVIEWS
+book_ids = database.execute("SELECT id FROM books")
+user_ids = database.execute("SELECT id FROM users")
 
- p database.execute("SELECT * FROM books")
+for i in 0...50
+	database.execute("INSERT INTO reviews (book_id, user_id, rating, content, updated_at, created_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)",
+	 [book_ids.sample, user_ids.sample, review_ratings.sample,review_content[i]])
+end
+
+## UPDATING ORDERS
+for i in 0...100 
+	database.execute("INSERT INTO orders (book_id, user_id, author_id, publisher_id, created_at, updated_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)", 
+		[book_ids.sample, user_ids.sample, author_ids.sample, publisher_ids.sample]) 
+end
+
+## TESTS
+
+## Find all books published by X publisher
+
+test_author = author_ids[5]
+
+database.execute("SELECT * FROM books")
+database.execute("SELECT * FROM reviews")
+database.execute("SELECT * FROM orders")
+database.execute("SELECT * FROM users")
+database.execute("SELECT * FROM authors")
+database.execute("SELECT * FROM publishers")
+
+puts database.execute("SELECT * FROM books WHERE author_id = ?", test_author)
+
+
+## Find all reviews on a certain book
+## Find all reviews by a certain user
+## Find all books written by a certain author
+## Find all reviews on book X with rating > 4 
+
