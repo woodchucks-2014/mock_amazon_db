@@ -15,7 +15,6 @@ namespace 'db' do
     ## Write queries to address questions
 
     require './seeder'
-    Model.establish_connection
 
     ## people
     Seeder.build_users

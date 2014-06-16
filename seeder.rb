@@ -1,6 +1,4 @@
-require './models/model'
-require './models/user'
-require './models/publisher'
+require './environment'
 
 module Seeder
   require 'faker'
