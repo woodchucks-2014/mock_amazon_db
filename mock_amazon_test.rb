@@ -1,6 +1,4 @@
-require "sqlite3"
-
-database = SQLite3::Database.open "amazon.db"
+require './environment'
 
 ## TESTS
 
@@ -13,27 +11,30 @@ def assert(statement)
 end
 
 assert "There should be users in the database" do
-  database.execute("SELECT * FROM users").count > 0
+  User.count > 0
 end
 
 assert "There should be publishers in the database" do
-  database.execute("SELECT * FROM publishers").count > 0
+  Publisher.count > 0
+end
+
+assert "There should be books in the database" do
+  Book.count > 0
+end
+
+assert "There should be reviews in the database" do
+  Review.count > 0
+end
+
+assert "There should be orders in the database" do
+  Order.count > 0
+end
+
+assert "There should be authors in the database" do
+  Author.count > 0
 end
 
 ## Find all books published by X publisher
-
-database.execute("SELECT * FROM books")
-database.execute("SELECT * FROM reviews")
-database.execute("SELECT * FROM orders")
-database.execute("SELECT * FROM users")
-database.execute("SELECT * FROM authors")
-database.execute("SELECT * FROM publishers")
-
-author_ids = database.execute("SELECT id FROM authors;")
-test_author = author_ids[5]
-puts database.execute("SELECT * FROM books WHERE author_id = ?", test_author)
-
-
 ## Find all reviews on a certain book
 ## Find all reviews by a certain user
 ## Find all books written by a certain author
