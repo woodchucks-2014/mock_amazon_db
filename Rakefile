@@ -7,22 +7,23 @@ namespace 'db' do
   end
 
   desc 'Seed database with sample data'
-  task :seed do
+  task :seed => :load do
     ## PLAN OF ATTACK
     ## Update SQL file to be readable by SQLlite3
     ## Import file
     ## use Faker gem to generate information for each of the tables
     ## Write queries to address questions
 
+    require './seeder'
+    Model.establish_connection
+
+    ## people
+    Seeder.build_users
+
     require "sqlite3"
     require "faker"
 
     database = SQLite3::Database.open "amazon.db"
-
-    fake_user_names = []
-    user_email = []
-    user_password = []
-    user_username = []
 
     fake_author_names = []
 
@@ -32,16 +33,9 @@ namespace 'db' do
     genres = ["Horror", "Romance", "Teen", "Sci Fi", "Mystery", "Fiction", "Non-fiction"] # 7 genres
     book_release_dates = []
 
-
     review_ratings = [1,2,3,4,5]
     review_content = []
 
-    100.times do ## people
-      fake_user_names << Faker::Name.name
-      user_email << Faker::Internet.email
-      user_password << Faker::Internet.password
-      user_username << Faker::Internet.user_name
-    end
 
     50.times do ## authors
       fake_author_names << Faker::Name.name
@@ -58,12 +52,6 @@ namespace 'db' do
 
     50.times do ## reviews
       review_content << Faker::Lorem.sentence
-    end
-
-    ## UPDATING USERS
-    for i in 0...100
-      database.execute("INSERT INTO users (name, email, password, username, updated_at, created_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)",
-       [fake_user_names[i], user_email[i], user_password[i], user_username[i]])
     end
 
     ## UPDATING PUBLISHERS
