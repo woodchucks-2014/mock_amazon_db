@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS Books;
+DROP TABLE IF EXISTS books;
 
-CREATE TABLE Books (
+CREATE TABLE books (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER,
   publisher_id INTEGER,
@@ -13,9 +13,9 @@ CREATE TABLE Books (
   FOREIGN KEY (publisher_id) REFERENCES Publishers(id)
 );
 
-DROP TABLE IF EXISTS Authors;
+DROP TABLE IF EXISTS authors;
 
-CREATE TABLE Authors (
+CREATE TABLE authors (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR DEFAULT NULL,
   publisher_id INTEGER DEFAULT NULL,
@@ -24,18 +24,18 @@ CREATE TABLE Authors (
   FOREIGN KEY (publisher_id) REFERENCES Publishers (id)
 );
 
-DROP TABLE IF EXISTS Publishers;
+DROP TABLE IF EXISTS publishers;
 
-CREATE TABLE Publishers (
+CREATE TABLE publishers (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR DEFAULT NULL,
   created_at DEFAULT current_timestamp,
   updated_at DEFAULT current_timestamp
 );
 
-DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS users;
 
-CREATE TABLE Users (
+CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name VARCHAR DEFAULT NULL,
   email VARCHAR DEFAULT NULL,
@@ -45,9 +45,9 @@ CREATE TABLE Users (
   updated_at DEFAULT current_timestamp
 );
 
-DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS orders;
 
-CREATE TABLE Orders (
+CREATE TABLE orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   book_id INTEGER DEFAULT NULL,
   user_id INTEGER DEFAULT NULL,
@@ -57,9 +57,9 @@ CREATE TABLE Orders (
   updated_at DEFAULT current_timestamp
 );
 
-DROP TABLE IF EXISTS Reviews;
+DROP TABLE IF EXISTS reviews;
 
-CREATE TABLE Reviews (
+CREATE TABLE reviews (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   book_id INTEGER DEFAULT NULL,
   user_id INTEGER DEFAULT NULL,
