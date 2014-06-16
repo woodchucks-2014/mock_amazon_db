@@ -7,7 +7,7 @@
 require "sqlite3"
 require "faker"
 
-database = SQLite3::Database.open "database.db"
+database = SQLite3::Database.open "amazon.db"
 
 fake_user_names = []
 user_email = []
