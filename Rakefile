@@ -20,14 +20,15 @@ namespace 'db' do
     ## people
     Seeder.build_users
 
+    ## publishers
+    Seeder.build_publishers
+
     require "sqlite3"
     require "faker"
 
     database = SQLite3::Database.open "amazon.db"
 
     fake_author_names = []
-
-    fake_companies = []
 
     book_titles = []
     genres = ["Horror", "Romance", "Teen", "Sci Fi", "Mystery", "Fiction", "Non-fiction"] # 7 genres
@@ -46,18 +47,8 @@ namespace 'db' do
       book_release_dates << Faker::Business.credit_card_expiry_date.to_s
     end
 
-    20.times do ## publishers
-      fake_companies << Faker::Company.name
-    end
-
     50.times do ## reviews
       review_content << Faker::Lorem.sentence
-    end
-
-    ## UPDATING PUBLISHERS
-    for i in 0...20
-      database.execute("INSERT INTO publishers (name, updated_at, created_at) VALUES (?, current_timestamp, current_timestamp)",
-       [fake_companies[i]])
     end
 
     ## UPDATING AUTHORS

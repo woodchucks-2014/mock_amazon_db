@@ -16,6 +16,10 @@ assert "There should be users in the database" do
   database.execute("SELECT * FROM users").count > 0
 end
 
+assert "There should be publishers in the database" do
+  database.execute("SELECT * FROM publishers").count > 0
+end
+
 ## Find all books published by X publisher
 
 database.execute("SELECT * FROM books")
