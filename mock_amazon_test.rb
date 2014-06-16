@@ -4,6 +4,18 @@ database = SQLite3::Database.open "amazon.db"
 
 ## TESTS
 
+def assert(statement)
+  if yield
+    puts ":)"
+  else
+    puts statement + " FAILED"
+  end
+end
+
+assert "There should be users in the database" do
+  database.execute("SELECT * FROM users").count > 0
+end
+
 ## Find all books published by X publisher
 
 database.execute("SELECT * FROM books")
