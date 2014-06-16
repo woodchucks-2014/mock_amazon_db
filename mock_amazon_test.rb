@@ -34,6 +34,11 @@ assert "There should be authors in the database" do
   Author.count > 0
 end
 
+# assert "An author should have books" do
+#   author = Author.all.sample
+#   author.books.count > 0
+# end
+
 ## Find all books published by X publisher
 ## Find all reviews on a certain book
 ## Find all reviews by a certain user
