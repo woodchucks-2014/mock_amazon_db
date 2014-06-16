@@ -1,6 +1,6 @@
-## PLAN OF ATTACK 
-## Update SQL file to be readable by SQLlite3 
-## Import file 
+## PLAN OF ATTACK
+## Update SQL file to be readable by SQLlite3
+## Import file
 ## use Faker gem to generate information for each of the tables
 ## Write queries to address questions
 
@@ -27,7 +27,7 @@ review_ratings = [1,2,3,4,5]
 review_content = []
 
 100.times do ## people
-	fake_user_names << Faker::Name.name 
+	fake_user_names << Faker::Name.name
 	user_email << Faker::Internet.email
 	user_password << Faker::Internet.password
 	user_username << Faker::Internet.user_name
@@ -63,7 +63,7 @@ for i in 0...20
 end
 
 ## UPDATING AUTHORS
-publisher_ids = database.execute("SELECT id FROM publishers") # 20 
+publisher_ids = database.execute("SELECT id FROM publishers") # 20
 
 for i in 0...50
 	x = publisher_ids.flatten.sample
@@ -89,9 +89,9 @@ for i in 0...50
 end
 
 ## UPDATING ORDERS
-for i in 0...100 
-	database.execute("INSERT INTO orders (book_id, user_id, author_id, publisher_id, created_at, updated_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)", 
-		[book_ids.sample, user_ids.sample, author_ids.sample, publisher_ids.sample]) 
+for i in 0...100
+	database.execute("INSERT INTO orders (book_id, user_id, author_id, publisher_id, created_at, updated_at) VALUES (?, ?, ?, ?, current_timestamp, current_timestamp)",
+		[book_ids.sample, user_ids.sample, author_ids.sample, publisher_ids.sample])
 end
 
 ## TESTS
@@ -113,5 +113,5 @@ puts database.execute("SELECT * FROM books WHERE author_id = ?", test_author)
 ## Find all reviews on a certain book
 ## Find all reviews by a certain user
 ## Find all books written by a certain author
-## Find all reviews on book X with rating > 4 
+## Find all reviews on book X with rating > 4
 
